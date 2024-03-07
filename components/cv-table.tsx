@@ -1,15 +1,15 @@
-import { getContacts } from "@/lib/data";
+import { getCVs } from "@/lib/data";
 import { formatDate } from "@/lib/utils";
 import { EditButton, DeleteButton } from "@/components/buttons";
 
-const ContactTable = async ({
+const CVTable = async ({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) => {
-  const contacts = await getContacts(query, currentPage);
+  const cvs = await getCVs(query, currentPage);
 
   return (
     <table className="w-full text-sm text-left text-gray-500">
@@ -18,24 +18,26 @@ const ContactTable = async ({
           <th className="py-3 px-6">#</th>
           <th className="py-3 px-6">Name</th>
           <th className="py-3 px-6">Phone Number</th>
-          {/* <th className="py-3 px-6">Tech Stack</th> */}
+          <th className="py-3 px-6">Gender</th>
+          <th className="py-3 px-6">Tech Stack</th>
           <th className="py-3 px-6">Created At</th>
           <th className="py-3 px-6 text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {contacts.map((contact, index) => (
-          <tr key={contact.id} className="bg-white border-b">
+        {cvs.map((cv, index) => (
+          <tr key={cv.id} className="bg-white border-b">
             <td className="py-3 px-6">{index + 1}</td>
-            <td className="py-3 px-6">{contact.name}</td>
-            <td className="py-3 px-6">{contact.phone}</td>
-            {/* <td className="py-3 px-6">{contact.techstack}</td> */}
+            <td className="py-3 px-6">{cv.name}</td>
+            <td className="py-3 px-6">{cv.phone}</td>
+            <td className="py-3 px-6">{cv.gender}</td>
+            <td className="py-3 px-6">{cv.techStack}</td>
             <td className="py-3 px-6">
-              {formatDate(contact.createdAt.toString())}
+              {formatDate(cv.createdAt.toString())}
             </td>
             <td className="flex justify-center gap-1 py-3">
-              <EditButton id={contact.id} />
-              <DeleteButton id={contact.id} />
+              <EditButton id={cv.id} />
+              <DeleteButton id={cv.id} />
             </td>
           </tr>
         ))}
@@ -44,4 +46,4 @@ const ContactTable = async ({
   );
 };
 
-export default ContactTable;
+export default CVTable;

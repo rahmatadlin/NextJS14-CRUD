@@ -1,21 +1,21 @@
 import UpdateForm from "@/components/edit-form";
-import { getContactById } from "@/lib/data";
+import { getCVById } from "@/lib/data";
 import { notFound } from "next/navigation";
 
-const UpdateContactPage = async ({ params }: { params: { id: string } }) => {
+const UpdateCVPage = async ({ params }: { params: { id: string } }) => {
   const id = params.id;
-  const contact = await getContactById(id);
+  const cv = await getCVById(id);
 
-  if (!contact) {
+  if (!cv) {
     notFound();
   }
 
   return (
     <div className="max-w-md mx-auto mt-5">
-      <h1 className="text-2xl text-center mb-2">Update Contact</h1>
-      <UpdateForm contact={contact} />
+      <h1 className="text-2xl text-center mb-2">Update CV</h1>
+      <UpdateForm cv={cv} />
     </div>
   );
 };
 
-export default UpdateContactPage;
+export default UpdateCVPage;

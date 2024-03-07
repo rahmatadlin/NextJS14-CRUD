@@ -12,15 +12,15 @@
 // }
 
 
-import ContactTable from "@/components/contact-table";
+import CVTable from "@/components/cv-table";
 import Search from "@/components/search";
 import Pagination from "@/components/pagination";
 import { CreateButton } from "@/components/buttons";
-import { getContactPages } from "@/lib/data";
+import { getCVPages } from "@/lib/data";
 import { Suspense } from "react";
 import { TableSkeleton } from "@/components/skeleton";
 
-const Contacts = async ({
+const CVs = async ({
   searchParams,
 }: {
   searchParams?: {
@@ -31,7 +31,7 @@ const Contacts = async ({
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
 
-  const totalPages = await getContactPages(query);
+  const totalPages = await getCVPages(query);
 
   return (
     <div className="max-w-screen-md mx-auto mt-5">
@@ -40,7 +40,7 @@ const Contacts = async ({
         <CreateButton />
       </div>
       <Suspense key={query + currentPage} fallback={<TableSkeleton />}>
-        <ContactTable query={query} currentPage={currentPage} />
+        <CVTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="flex justify-center mt-4">
         <Pagination totalPages={totalPages} />
@@ -49,4 +49,4 @@ const Contacts = async ({
   );
 };
 
-export default Contacts;
+export default CVs;

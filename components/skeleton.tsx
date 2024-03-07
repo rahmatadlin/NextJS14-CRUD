@@ -6,6 +6,8 @@ export const TableSkeleton = () => {
             <th className="py-3 px-6">#</th>
             <th className="py-3 px-6">Name</th>
             <th className="py-3 px-6">Phone Number</th>
+            <th className="py-3 px-6">Gender</th>
+            <th className="py-3 px-6">Tech Stack</th>
             <th className="py-3 px-6">Created At</th>
             <th className="py-3 px-6 text-center">Actions</th>
           </tr>

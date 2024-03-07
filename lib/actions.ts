@@ -5,13 +5,15 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const ContactSchema = z.object({
+const CVSchema = z.object({
   name: z.string().min(6),
   phone: z.string().min(11),
+  gender: z.string(),
+  techStack: z.string(),
 });
 
-export const saveContact = async (prevSate: any, formData: FormData) => {
-  const validatedFields = ContactSchema.safeParse(
+export const saveCV = async (prevSate: any, formData: FormData) => {
+  const validatedFields = CVSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
 
@@ -22,26 +24,28 @@ export const saveContact = async (prevSate: any, formData: FormData) => {
   }
 
   try {
-    await prisma.contact.create({
+    await prisma.cv.create({
       data: {
         name: validatedFields.data.name,
         phone: validatedFields.data.phone,
+        gender: validatedFields.data.gender,
+        techStack: validatedFields.data.techStack,
       },
     });
   } catch (error) {
-    return { message: "Failed to create contact" };
+    return { message: "Failed to create CV" };
   }
 
-  revalidatePath("/contacts");
-  redirect("/contacts");
+  revalidatePath("/");
+  redirect("/");
 };
 
-export const updateContact = async (
+export const updateCV = async (
   id: string,
   prevSate: any,
   formData: FormData
 ) => {
-  const validatedFields = ContactSchema.safeParse(
+  const validatedFields = CVSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
 
@@ -52,29 +56,31 @@ export const updateContact = async (
   }
 
   try {
-    await prisma.contact.update({
+    await prisma.cv.update({
       data: {
         name: validatedFields.data.name,
         phone: validatedFields.data.phone,
+        gender: validatedFields.data.gender,
+        techStack: validatedFields.data.techStack,
       },
       where: { id },
     });
   } catch (error) {
-    return { message: "Failed to update contact" };
+    return { message: "Failed to update CV" };
   }
 
-  revalidatePath("/contacts");
-  redirect("/contacts");
+  revalidatePath("/");
+  redirect("/");
 };
 
-export const deleteContact = async (id: string) => {
+export const deleteCV = async (id: string) => {
   try {
-    await prisma.contact.delete({
+    await prisma.cv.delete({
       where: { id },
     });
   } catch (error) {
-    return { message: "Failed to delete contact" };
+    return { message: "Failed to delete CV" };
   }
 
-  revalidatePath("/contacts");
+  revalidatePath("/");
 };

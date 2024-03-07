@@ -2,11 +2,11 @@ import { prisma } from "@/lib/prisma";
 
 const ITEMS_PER_PAGE = 5;
 
-export const getContacts = async (query: string, currentPage: number) => {
+export const getCVs = async (query: string, currentPage: number) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     // await new Promise((resolve) => setTimeout(resolve, 3000))
-    const contacts = await prisma.contact.findMany({
+    const cvs = await prisma.cv.findMany({
       skip: offset,
       take: ITEMS_PER_PAGE,
       where: {
@@ -23,29 +23,41 @@ export const getContacts = async (query: string, currentPage: number) => {
               mode: "insensitive",
             },
           },
+          {
+            gender: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+          {
+            techStack: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
         ],
       },
     });
-    return contacts;
+    return cvs;
   } catch (error) {
-    throw new Error("Failed to fetch contact data");
+    throw new Error("Failed to fetch cv data");
   }
 };
 
-export const getContactById = async (id: string) => {
+export const getCVById = async (id: string) => {
   try {
-    const contact = await prisma.contact.findUnique({
+    const cv = await prisma.cv.findUnique({
       where: { id },
     });
-    return contact;
+    return cv;
   } catch (error) {
-    throw new Error("Failed to fetch contact data");
+    throw new Error("Failed to fetch cv data");
   }
 };
 
-export const getContactPages = async (query: string) => {
+export const getCVPages = async (query: string) => {
   try {
-    const contacts = await prisma.contact.count({
+    const cvs = await prisma.cv.count({
       where: {
         OR: [
           {
@@ -60,12 +72,24 @@ export const getContactPages = async (query: string) => {
               mode: "insensitive",
             },
           },
+          {
+            gender: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+          {
+            techStack: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
         ],
       },
     });
-    const totalPages = Math.ceil(Number(contacts) / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(Number(cvs) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    throw new Error("Failed to fetch contact data");
+    throw new Error("Failed to fetch cv data");
   }
 };
