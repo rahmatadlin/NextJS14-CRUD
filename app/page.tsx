@@ -12,7 +12,7 @@
 // }
 
 
-import CVTable from "@/components/cv-table";
+import CVTable from "@/components/cv-card";
 import Search from "@/components/search";
 import Pagination from "@/components/pagination";
 import { CreateButton } from "@/components/buttons";

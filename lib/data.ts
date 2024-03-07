@@ -1,11 +1,11 @@
 import { prisma } from "@/lib/prisma";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 6;
 
 export const getCVs = async (query: string, currentPage: number) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
-    // await new Promise((resolve) => setTimeout(resolve, 3000))
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     const cvs = await prisma.cv.findMany({
       skip: offset,
       take: ITEMS_PER_PAGE,
